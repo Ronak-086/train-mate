@@ -1,0 +1,58 @@
+server:
+  port: ${PORT:8080}
+  shutdown: graceful
+  # Behind a platform proxy (Render, Fly): honour X-Forwarded-* so URLs and client IPs are right.
+  forward-headers-strategy: framework
+
+spring:
+  main:
+    banner-mode: "off"
+  lifecycle:
+    timeout-per-shutdown-phase: 20s
+  datasource:
+    # Runtime traffic. With Neon use the POOLED host here and add ?sslmode=require.
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/trainmate}
+    username: ${DB_USER:trainmate}
+    password: ${DB_PASSWORD:trainmate}
+    hikari:
+      # Small on purpose: a 512 MB instance and a serverless database both prefer few connections.
+      maximum-pool-size: ${DB_POOL_SIZE:5}
+      connection-timeout: 5000
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: "3"
+    locations: classpath:db/migration
+    # Migrations need a DIRECT (non-pooled) connection because they take advisory locks. On Neon set
+    # FLYWAY_URL to the direct host; locally it falls back to DB_URL.
+    url: ${FLYWAY_URL:${DB_URL:jdbc:postgresql://localhost:5432/trainmate}}
+    user: ${DB_USER:trainmate}
+    password: ${DB_PASSWORD:trainmate}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+trainmate:
+  auth:
+    # "firebase" in production. "dev" accepts dev:<name> tokens and is refused unless dev-tools is on.
+    mode: ${AUTH_MODE:firebase}
+  firebase:
+    project-id: ${FIREBASE_PROJECT_ID:}
+  pnr-salt: ${PNR_SALT:}
+  redis:
+    # redis:// or rediss:// (Upstash). Empty means an in-process store, fine for one instance and tests.
+    url: ${REDIS_URL:}
+  provider:
+    name: ${PROVIDER:railradar}
+    api-key: ${RAILRADAR_API_KEY:}
+    daily-budget: ${PROVIDER_DAILY_BUDGET:100}
+  # Enables /api/dev/* and a movable clock. NEVER in production.
+  dev-tools: ${DEV_TOOLS:false}
+  dev-seed: ${DEV_SEED:false}

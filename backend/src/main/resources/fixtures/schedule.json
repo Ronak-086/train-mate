@@ -1,0 +1,26 @@
+{
+  "_note": "FICTIONAL timetable fixtures for development and tests. The supplied designs mix stations that do not form a real route. Real data comes from the schedule import (spec 8.2).",
+  "stations": [
+    {"code": "GHY", "name": "Guwahati"},
+    {"code": "NGC", "name": "Nagaon"},
+    {"code": "LMG", "name": "Lumding Jn"},
+    {"code": "NJP", "name": "New Jalpaiguri"},
+    {"code": "NDLS", "name": "New Delhi"}
+  ],
+  "trains": [
+    {"trainNo": "12345", "name": "Express", "runDays": "MTWTFSS", "stops": [
+      {"station": "GHY", "dep": "06:30"},
+      {"station": "NGC", "arr": "08:30", "dep": "08:32"},
+      {"station": "LMG", "arr": "09:10", "dep": "09:15"},
+      {"station": "NJP", "arr": "11:50", "dep": "12:05"},
+      {"station": "NDLS", "arr": "13:50"}]},
+    {"trainNo": "12346", "name": "Sample Mail", "runDays": "MTWTFSS", "stops": [
+      {"station": "GHY", "dep": "07:00"},
+      {"station": "NJP", "arr": "12:30", "dep": "12:40"},
+      {"station": "NDLS", "arr": "18:45"}]},
+    {"trainNo": "12347", "name": "Sample Superfast", "runDays": "MTWTFSS", "stops": [
+      {"station": "LMG", "dep": "05:00"},
+      {"station": "GHY", "arr": "08:10", "dep": "08:20"},
+      {"station": "NDLS", "arr": "17:30"}]}
+  ]
+}

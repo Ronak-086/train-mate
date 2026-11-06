@@ -1,0 +1,6 @@
+node_modules
+.next
+.next-firebase
+.next-backend
+test-results
+playwright-report

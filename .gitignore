@@ -1,0 +1,36 @@
+# Root gitignore for TrainMate
+
+# Old unrelated archive / folder in workspace
+vloacalizer.zip
+vlocalizer-improved/
+desktop.ini
+
+# Build and dependencies
+**/node_modules/
+**/target/
+**/build/
+**/.next/
+**/.next-*/
+**/out/
+**/test-results/
+**/playwright-report/
+
+# OS and IDE
+.DS_Store
+Thumbs.db
+*.iml
+.idea/
+.vscode/
+
+# Environment and credentials files (NEVER commit secrets)
+.env
+.env.*
+!.env.example
+*.env
+*.env.local
+**/.env
+**/.env.local
+**/.env.*
+!**/.env.example
+*.pem
+*.key
